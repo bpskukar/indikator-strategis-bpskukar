@@ -550,6 +550,9 @@ section.block.alt { background: var(--bg-alt); border-block: 1px solid var(--bor
 .kpi__aksi a { display: inline-flex; align-items: center; gap: 4px; color: var(--brand-strong); text-decoration: none; }
 .kpi__aksi a + a { color: var(--text-mute); }
 .kpi__aksi a:hover { text-decoration: underline; }
+.kpi__bagi { display: inline-flex; align-items: center; gap: 4px; border: 0; background: none; padding: 0; margin-left: auto; font: inherit; font-weight: 700; color: var(--text-mute); cursor: pointer; }
+.kpi__bagi:hover { color: var(--brand-strong); text-decoration: underline; }
+.kpi__bagi:disabled { cursor: progress; opacity: .7; }
 .alur-catatan { margin: 18px 0 0; font-size: 12.5px; color: var(--text-mute); line-height: 1.55; }
 .alur-catatan b { color: var(--text-soft); }
 
@@ -867,3 +870,23 @@ td.num { text-align: right; font-variant-numeric: tabular-nums; font-weight: 700
   .region__val { font-size: .9rem; }
   .acc__panel { padding-left: 20px; }
 }
+
+
+/* ---------------- Bandingkan kab/kota ---------------- */
+.banding__pilih { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.banding__pilih button {
+  padding: 7px 13px; border-radius: 999px; border: 1px solid var(--border-strong); background: var(--surface);
+  color: var(--text-soft); font: 600 12.5px 'Plus Jakarta Sans', sans-serif; cursor: pointer; transition: .15s;
+}
+.banding__pilih button:hover { border-color: var(--brand); color: var(--brand-strong); }
+.banding__pilih button[aria-pressed="true"] { background: var(--brand); border-color: var(--brand); color: #fff; }
+.banding__ring { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-bottom: 14px; }
+.banding__ring div { background: var(--surface-2, rgba(0,0,0,.03)); border: 1px solid var(--border); border-radius: 12px; padding: 10px 12px; }
+.banding__ring b { display: block; font-size: 20px; font-weight: 800; color: var(--text); line-height: 1.15; }
+.banding__ring span { font-size: 11.5px; color: var(--text-mute); font-weight: 600; }
+.banding__ring div.kukar { border-color: var(--brand); background: var(--brand-soft, rgba(237,112,20,.08)); }
+.banding__ring div.kukar b { color: var(--brand-strong); }
+.chart-box--tinggi { height: 380px; }
+.banding__sumber { margin: 12px 0 0; font-size: 12px; color: var(--text-mute); line-height: 1.55; }
+.banding__sumber a { color: var(--brand-strong); }
+@media (max-width: 640px) { .chart-box--tinggi { height: 420px; } }

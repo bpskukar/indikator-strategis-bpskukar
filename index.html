@@ -22,6 +22,10 @@
 <meta name="twitter:image" content="https://bpskukar.github.io/indikator-strategis-bpskukar/assets/og-indikator.png">
 
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%23ED7014'/><path d='M22 82V46a28 28 0 0 1 56 0v36M40 82V60a10 10 0 0 1 20 0v22M14 82h72' fill='none' stroke='white' stroke-width='8' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/assets/ikon/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-title" content="PINTAR Kukar">
+<meta name="mobile-web-app-capable" content="yes">
 
 <!-- PINTAR Kukar: bilah bersama + tema terang/gelap (dipasang sebelum gaya agar tidak berkedip) -->
 <script src="assets/pintar.js" data-situs="indikator"></script>
@@ -51,6 +55,7 @@
       <a href="#kependudukan">Kependudukan</a>
       <a href="#manusia">Pembangunan Manusia</a>
       <a href="#kemiskinan">Kemiskinan</a>
+      <a href="#bandingkan">Bandingkan</a>
       <a href="#rekomendasi">Rekomendasi</a>
       <a href="#sumber">Sumber</a>
     </nav>
@@ -67,6 +72,7 @@
   <a href="#kependudukan">Kependudukan</a>
   <a href="#manusia">Pembangunan Manusia</a>
   <a href="#kemiskinan">Kemiskinan</a>
+  <a href="#bandingkan">Bandingkan</a>
   <a href="#rekomendasi">Rekomendasi</a>
   <a href="#sumber">Sumber</a>
 </div>
@@ -277,6 +283,23 @@
   </div>
 </section>
 
+<!-- ============================ BANDINGKAN ============================ -->
+<section class="block alt" id="bandingkan">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-kicker">Bagian E</span>
+      <h2>Bandingkan dengan Kabupaten/Kota Lain</h2>
+      <p>Posisi Kutai Kartanegara di antara sepuluh kabupaten/kota Kalimantan Timur. Pilih indikatornya; batang oranye adalah Kukar, garis putus-putus angka Provinsi Kaltim.</p>
+    </div>
+    <div class="card reveal">
+      <div class="banding__pilih" id="bandingPilih" role="group" aria-label="Pilih indikator"></div>
+      <div class="banding__ring" id="bandingRing"></div>
+      <div class="chart-box chart-box--tinggi"><canvas id="chartBanding"></canvas></div>
+      <p class="banding__sumber" id="bandingSumber"></p>
+    </div>
+  </div>
+</section>
+
 <!-- ============================ REKOMENDASI ============================ -->
 <section class="block alt" id="rekomendasi">
   <div class="wrap">
@@ -366,6 +389,7 @@
           <li><a href="#kependudukan">Potret kependudukan</a></li>
           <li><a href="#manusia">Pembangunan manusia</a></li>
           <li><a href="#kemiskinan">Profil kemiskinan</a></li>
+          <li><a href="#bandingkan">Bandingkan kab/kota se-Kaltim</a></li>
           <li><a href="#rekomendasi">Rekomendasi kebijakan</a></li>
         </ul>
       </div>
@@ -406,6 +430,7 @@
 <script src="/katalog-data-bpskukar/assets/config.js"></script>
 <script src="assets/data.js"></script>
 <script src="assets/muat.js"></script>
+<script src="assets/kartu.js"></script>
 <script src="assets/app.js"></script>
 </body>
 </html>

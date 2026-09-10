@@ -174,19 +174,29 @@ const DATA = {
 
   /* ---------- Wilayah Kalimantan Timur 2025 ----------
      laki/perempuan dalam ribu jiwa · miskin dalam persen
+     bps = kode wilayah BPS (dipakai pembaruan otomatis dari Web API)
      row/col = posisi kartogram (perkiraan letak geografis)
   ------------------------------------------------------ */
+  /* Pembanding kabupaten/kota se-Kaltim (bagian "Bandingkan"). Kolom angka per wilayah ada di
+     `wilayah` (ipm, uhh, hls, rls, ppp, miskin, laki+perempuan; tpt/lpe/pdrbKapita/gini diisi
+     bila tersedia — lewat Ruang Pegawai atau tarikan Web API). Di sini: tahun data, angka
+     provinsi sebagai pembanding, dan sumbernya. */
+  banding: {
+    tahunIpm: '2025', tahunMiskin: '2025', tahunPenduduk: '2025', tahunTpt: '', tahunLpe: '', tahunPdrbKapita: '', tahunGini: '',
+    provIpm: 79.39, provUhh: 75.28, provHls: 14.04, provRls: 10.10, provPpp: 14254, provMiskin: 5.17, provTpt: 5.18, provLpe: null, provPdrbKapita: null, provGini: 0.312,
+    sumber: 'BPS Provinsi Kalimantan Timur: IPM dan komponennya 2025 (metode baru, hasil Long Form SP2020), persentase penduduk miskin Maret 2025, proyeksi penduduk 2025; angka provinsi dari Berita Resmi Statistik BPS Kaltim.'
+  },
   wilayah: [
-    { nama:'Berau',               kode:'BRU', laki:140.89, perempuan:124.41, miskin:4.44,  row:1, col:2 },
-    { nama:'Mahakam Ulu',         kode:'MHU', laki:17.89,  perempuan:16.85,  miskin:10.09, row:2, col:1 },
-    { nama:'Kutai Timur',         kode:'KTM', laki:251.46, perempuan:218.94, miskin:8.07,  row:2, col:3 },
-    { nama:'Kutai Barat',         kode:'KBR', laki:94.57,  perempuan:85.74,  miskin:8.72,  row:3, col:1 },
-    { nama:'Kutai Kartanegara',   kode:'KKR', laki:438.02, perempuan:407.60, miskin:6.72,  row:3, col:2, home:true },
-    { nama:'Bontang',             kode:'BTG', laki:97.49,  perempuan:93.22,  miskin:3.21,  row:3, col:3 },
-    { nama:'Samarinda',           kode:'SMD', laki:439.04, perempuan:426.27, miskin:3.45,  row:4, col:2 },
-    { nama:'Paser',               kode:'PSR', laki:150.12, perempuan:139.63, miskin:8.13,  row:5, col:1 },
-    { nama:'Penajam Paser Utara', kode:'PPU', laki:205.10, perempuan:194.93, miskin:5.78,  row:5, col:2 },
-    { nama:'Balikpapan',          kode:'BPP', laki:369.83, perempuan:355.61, miskin:1.97,  row:5, col:3 }
+    { nama:'Berau',               kode:'BRU', bps:'6405', ipm:77.72, uhh:73.95, hls:13.44, rls:9.58, ppp:14582, laki:140.89, perempuan:124.41, miskin:4.44,  row:1, col:2 },
+    { nama:'Mahakam Ulu',         kode:'MHU', bps:'6411', ipm:71.53, uhh:73.91, hls:12.85, rls:8.71, ppp:9381, laki:17.89,  perempuan:16.85,  miskin:10.09, row:2, col:1 },
+    { nama:'Kutai Timur',         kode:'KTM', bps:'6404', ipm:76.48, uhh:74.87, hls:13.22, rls:9.48, ppp:12755, laki:251.46, perempuan:218.94, miskin:8.07,  row:2, col:3 },
+    { nama:'Kutai Barat',         kode:'KBR', bps:'6402', ipm:75.38, uhh:74.23, hls:13.4, rls:9.01, ppp:12251, laki:94.57,  perempuan:85.74,  miskin:8.72,  row:3, col:1 },
+    { nama:'Kutai Kartanegara',   kode:'KKR', bps:'6403', ipm:77.25, uhh:74.65, hls:13.85, rls:9.28, ppp:13365, laki:438.02, perempuan:407.60, miskin:6.72,  row:3, col:2, home:true },
+    { nama:'Bontang',             kode:'BTG', bps:'6474', ipm:83.04, uhh:75.36, hls:13.8, rls:11.03, ppp:18861, laki:97.49,  perempuan:93.22,  miskin:3.21,  row:3, col:3 },
+    { nama:'Samarinda',           kode:'SMD', bps:'6472', ipm:83.53, uhh:75.89, hls:15.41, rls:11.04, ppp:16345, laki:439.04, perempuan:426.27, miskin:3.45,  row:4, col:2 },
+    { nama:'Paser',               kode:'PSR', bps:'6401', ipm:75.85, uhh:74.39, hls:13.39, rls:9.04, ppp:12709, laki:150.12, perempuan:139.63, miskin:8.13,  row:5, col:1 },
+    { nama:'Penajam Paser Utara', kode:'PPU', bps:'6409', ipm:75.82, uhh:74.6, hls:13.0, rls:8.72, ppp:13636, laki:205.10, perempuan:194.93, miskin:5.78,  row:5, col:2 },
+    { nama:'Balikpapan',          kode:'BPP', bps:'6471', ipm:83.23, uhh:76.24, hls:14.26, rls:11.04, ppp:17482, laki:369.83, perempuan:355.61, miskin:1.97,  row:5, col:3 }
   ],
 
   /* ---------- Rekomendasi kebijakan (Booklet TW II) ---------- */

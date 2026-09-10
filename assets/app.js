@@ -69,7 +69,8 @@
 
   const ICON = {
     menu: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>',
-    luar: '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>'
+    luar: '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>',
+    bagi: '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 8 5-5 5 5"/><path d="M5 14v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5"/></svg>'
   };
 
   /** Ambil nilai CSS custom property yang sedang aktif */
@@ -126,9 +127,12 @@
     const grid = $('#kpiGrid');
     if (!grid) return;
 
+    /* id kartu → butir glosarium (katalog/glosarium.html#id) */
+    const GLOS = { 'pdrb-adhb': 'pdrb', 'pdrb-adhk': 'adhb-adhk' };
     grid.innerHTML = (D.indikator || []).map((it) => {
       const q = encodeURIComponent(it.label);
       const tanya = encodeURIComponent('berapa ' + it.label + ' Kukar?');
+      const glos = GLOS[it.id] || it.id;
       return `
       <article class="kpi reveal"
                style="--kpi-accent:${warna(it.accent, '#ED7014')}"
@@ -152,6 +156,8 @@
         <div class="kpi__aksi">
           <a href="${T.katalog}?q=${q}" title="Cari data lengkapnya di Katalog Data PST">Minta data lengkap ${ICON.luar}</a>
           <a href="${T.katalog}?tanya=${tanya}" title="Tanyakan ke asisten PST">Tanya PST</a>
+          <a href="${T.katalog}glosarium.html#${esc(glos)}" title="Definisi, cara menghitung, dan cara membaca angka ini">Apa ini?</a>
+          <button type="button" class="kpi__bagi" data-bagi="${esc(it.id)}" title="Unduh atau bagikan kartu angka ini (PNG)">${ICON.bagi} Bagikan kartu</button>
         </div>
       </article>`;
     }).join('');
@@ -160,6 +166,25 @@
     observeReveal(grid);
     observeCounters(grid);
   }
+
+  /* deret tahunan untuk kartu bagikan (bila ada) */
+  function seriUntuk(id) {
+    const km = D.kemiskinan || {}, pt = D.pdrbTahun || {}, ipm = D.ipm || {};
+    const m = { p0: [km.label, km.p0], ipm: [ipm.label, ipm.nilai], lpe: [pt.label, pt.lpe], 'pdrb-adhb': [pt.label, pt.adhb], 'pdrb-adhk': [pt.label, pt.adhk] }[id];
+    return m && m[0] && m[1] ? { label: m[0], nilai: m[1] } : null;
+  }
+  function opsiKartu(it) {
+    return { label: it.label, value: it.value, dec: it.dec, unit: it.unit, abbr: it.abbr, note: it.note, accent: warna(it.accent, '#ED7014'), tag: it.tag,
+             seri: seriUntuk(it.id), tautanPenuh: location.origin + T.indikator };
+  }
+  document.addEventListener('click', (e) => {
+    const b = e.target.closest('button[data-bagi]'); if (!b || !window.KARTU) return;
+    const it = (D.indikator || []).find((x) => x.id === b.dataset.bagi); if (!it) return;
+    const awal = b.innerHTML; b.disabled = true; b.textContent = 'Menyiapkan…';
+    KARTU.bagikan(opsiKartu(it)).then((r) => { b.textContent = r === 'diunduh' ? 'Kartu diunduh ✓' : r === 'dibagikan' ? 'Dibagikan ✓' : 'Bagikan kartu'; })
+      .catch(() => { b.textContent = 'Gagal membuat kartu'; })
+      .then(() => { b.disabled = false; setTimeout(() => { b.innerHTML = awal; }, 2500); });
+  });
 
   function filterKPI() {
     const cards = $$('#kpiGrid .kpi');
@@ -526,8 +551,110 @@
     });
   }
 
+  /* ---------------- Bandingkan kab/kota se-Kaltim ---------------- */
+  /* Kolom di D.wilayah yang bisa dibandingkan. arah: 'tinggi' = makin besar makin baik, 'rendah' = sebaliknya, 'netral' = tanpa penilaian */
+  const BANDING = [
+    { k: 'ipm',        label: 'IPM',                          unit: '',             dec: 2, arah: 'tinggi', th: 'tahunIpm',        prov: 'provIpm',        glos: 'ipm' },
+    { k: 'miskin',     label: 'Persentase penduduk miskin',   unit: '%',            dec: 2, arah: 'rendah', th: 'tahunMiskin',     prov: 'provMiskin',     glos: 'p0' },
+    { k: 'uhh',        label: 'Umur harapan hidup',           unit: 'tahun',        dec: 2, arah: 'tinggi', th: 'tahunIpm',        prov: 'provUhh',        glos: 'uhh' },
+    { k: 'hls',        label: 'Harapan lama sekolah',         unit: 'tahun',        dec: 2, arah: 'tinggi', th: 'tahunIpm',        prov: 'provHls',        glos: 'hls' },
+    { k: 'rls',        label: 'Rata-rata lama sekolah',       unit: 'tahun',        dec: 2, arah: 'tinggi', th: 'tahunIpm',        prov: 'provRls',        glos: 'rls' },
+    { k: 'ppp',        label: 'Pengeluaran per kapita',       unit: 'ribu Rp/th',   dec: 0, arah: 'tinggi', th: 'tahunIpm',        prov: 'provPpp',        glos: 'ppp' },
+    { k: 'penduduk',   label: 'Jumlah penduduk',              unit: 'ribu jiwa',    dec: 2, arah: 'netral', th: 'tahunPenduduk',   prov: null,             glos: 'penduduk', hitung: (r) => (r.laki != null && r.perempuan != null) ? Number(r.laki) + Number(r.perempuan) : null },
+    { k: 'tpt',        label: 'Pengangguran terbuka (TPT)',   unit: '%',            dec: 2, arah: 'rendah', th: 'tahunTpt',        prov: 'provTpt',        glos: 'tpt' },
+    { k: 'lpe',        label: 'Pertumbuhan ekonomi',          unit: '%',            dec: 2, arah: 'tinggi', th: 'tahunLpe',        prov: 'provLpe',        glos: 'lpe' },
+    { k: 'pdrbKapita', label: 'PDRB per kapita',              unit: 'juta Rp',      dec: 1, arah: 'netral', th: 'tahunPdrbKapita', prov: 'provPdrbKapita', glos: 'pdrb-kapita' },
+    { k: 'gini',       label: 'Rasio Gini',                   unit: '',             dec: 3, arah: 'rendah', th: 'tahunGini',       prov: 'provGini',       glos: 'gini' }
+  ];
+  function nilaiBanding(m, r) {
+    const v = m.hitung ? m.hitung(r) : r[m.k];
+    return (v == null || v === '' || isNaN(Number(v))) ? null : Number(v);
+  }
+  function bandingTersedia() {
+    const W = D.wilayah || [];
+    return BANDING.filter((m) => W.filter((r) => nilaiBanding(m, r) != null).length >= Math.min(8, W.length));
+  }
+  function renderBanding() {
+    const pilih = $('#bandingPilih'); if (!pilih) return;
+    const ada = bandingTersedia();
+    if (!ada.length) { pilih.innerHTML = ''; $('#bandingRing').innerHTML = '<div><span>Belum ada angka pembanding per kabupaten/kota.</span></div>'; return; }
+    if (!state.banding || !ada.some((m) => m.k === state.banding)) state.banding = ada[0].k;
+    pilih.innerHTML = ada.map((m) => `<button type="button" data-k="${m.k}" aria-pressed="${m.k === state.banding}">${esc(m.label)}</button>`).join('');
+    pilih.querySelectorAll('button').forEach((b) => { b.onclick = () => { state.banding = b.dataset.k; renderBanding(); buildBandingChart(); }; });
+
+    const m = ada.find((x) => x.k === state.banding), B = D.banding || {};
+    const rows = (D.wilayah || []).map((r) => ({ nama: r.nama, kode: r.kode, home: !!r.home, v: nilaiBanding(m, r) })).filter((r) => r.v != null);
+    const urut = rows.slice().sort((a, b) => m.arah === 'rendah' ? a.v - b.v : b.v - a.v);
+    const kukar = rows.find((r) => r.home), rank = kukar ? urut.findIndex((r) => r.home) + 1 : null;
+    const rata = rows.reduce((t, r) => t + r.v, 0) / rows.length;
+    const prov = m.prov && B[m.prov] != null && B[m.prov] !== '' ? Number(B[m.prov]) : null;
+    const th = m.th && B[m.th] ? String(B[m.th]) : '';
+    const satuan = m.unit ? ' ' + m.unit : '';
+    const terbaik = urut[0];
+    $('#bandingRing').innerHTML =
+      (kukar ? `<div class="kukar"><b>${fmt(kukar.v, m.dec)}${m.unit ? '<small style="font-size:12px;font-weight:600"> ' + esc(m.unit) + '</small>' : ''}</b><span>Kutai Kartanegara${th ? ' · ' + esc(th) : ''}</span></div>` : '') +
+      (rank ? `<div><b>${rank} <small style="font-size:12px;font-weight:600">dari ${rows.length}</small></b><span>Peringkat${m.arah === 'rendah' ? ' (terendah = terbaik)' : m.arah === 'tinggi' ? ' (tertinggi = terbaik)' : ''}</span></div>` : '') +
+      `<div><b>${fmt(rata, m.dec)}</b><span>Rata-rata ${rows.length} kab/kota</span></div>` +
+      (prov != null ? `<div><b>${fmt(prov, m.dec)}</b><span>Provinsi Kaltim</span></div>` : '') +
+      (terbaik ? `<div><b style="font-size:15px">${esc(terbaik.nama)}</b><span>${m.arah === 'rendah' ? 'Terendah' : 'Tertinggi'}: ${fmt(terbaik.v, m.dec)}${esc(satuan)}</span></div>` : '');
+    $('#bandingSumber').innerHTML = `${esc(m.label)}${th ? ' tahun ' + esc(th) : ''}. ${esc(B.sumber || 'Sumber: BPS Provinsi Kalimantan Timur.')} ` +
+      `<a href="${T.katalog}glosarium.html#${esc(m.glos)}">Apa itu ${esc(m.label)}?</a>`;
+  }
+  function buildBandingChart() {
+    const ctx = $('#chartBanding'); if (!ctx || !window.Chart) return;
+    const ada = bandingTersedia(); const m = ada.find((x) => x.k === state.banding) || ada[0]; if (!m) return;
+    const B = D.banding || {};
+    const rows = (D.wilayah || []).map((r) => ({ nama: r.nama, home: !!r.home, v: nilaiBanding(m, r) })).filter((r) => r.v != null)
+      .sort((a, b) => m.arah === 'rendah' ? a.v - b.v : b.v - a.v);
+    const prov = m.prov && B[m.prov] != null && B[m.prov] !== '' ? Number(B[m.prov]) : null;
+    const opt = baseOptions();
+    opt.indexAxis = 'y';
+    opt.layout = { padding: { top: 14, right: 8 } };
+    opt.interaction = { mode: 'nearest', intersect: false };
+    opt.plugins.legend.display = false;
+    opt.plugins.tooltip.callbacks = { label: (c) => `${fmt(c.parsed.x, m.dec)}${m.unit ? ' ' + m.unit : ''}` };
+    opt.scales = {
+      x: { grid: { color: cssVar('--grid-line'), drawTicks: false }, border: { display: false }, beginAtZero: m.arah !== 'netral' && m.k !== 'uhh' && m.k !== 'rls' && m.k !== 'hls',
+           ticks: { color: cssVar('--tick'), font: { family: 'Plus Jakarta Sans, sans-serif', size: 11 }, callback: (v) => fmt(v, m.dec > 2 ? m.dec : 0) } },
+      y: { grid: { display: false }, ticks: { color: cssVar('--tick'), font: { family: 'Plus Jakarta Sans, sans-serif', size: 12, weight: '600' } } }
+    };
+    const garisProv = {
+      id: 'garisProv',
+      afterDatasetsDraw(chart) {
+        const c = chart.ctx, area = chart.chartArea;
+        /* angka di ujung batang */
+        const meta = chart.getDatasetMeta(0);
+        c.save(); c.font = '700 11px Plus Jakarta Sans, sans-serif'; c.textBaseline = 'middle';
+        meta.data.forEach((bar, i) => {
+          const v = rows[i].v, teks = fmt(v, m.dec), lebar = c.measureText(teks).width;
+          const dalam = bar.x - area.left > lebar + 14;
+          c.fillStyle = dalam ? (rows[i].home ? '#fff' : cssVar('--text')) : cssVar('--text');
+          c.textAlign = dalam ? 'right' : 'left';
+          c.fillText(teks, dalam ? bar.x - 6 : bar.x + 6, bar.y);
+        });
+        c.restore();
+        if (prov == null) return;
+        const x = chart.scales.x.getPixelForValue(prov);
+        if (!isFinite(x) || x < area.left || x > area.right) return;
+        c.save(); c.setLineDash([5, 4]); c.strokeStyle = cssVar('--text-mute'); c.lineWidth = 1.5;
+        c.beginPath(); c.moveTo(x, area.top); c.lineTo(x, area.bottom); c.stroke();
+        c.setLineDash([]); c.fillStyle = cssVar('--text-mute'); c.font = '600 11px Plus Jakarta Sans, sans-serif'; c.textBaseline = 'alphabetic'; c.textAlign = x > (area.left + area.right) / 2 ? 'right' : 'left';
+        c.fillText('Kaltim ' + fmt(prov, m.dec), x + (c.textAlign === 'right' ? -6 : 6), area.top - 4); c.restore();
+      }
+    };
+    if (charts.banding) charts.banding.destroy();
+    charts.banding = new Chart(ctx, {
+      type: 'bar',
+      data: { labels: rows.map((r) => r.nama), datasets: [{ data: rows.map((r) => r.v), backgroundColor: rows.map((r) => r.home ? cssVar('--brand') : cssVar('--grid-line') || '#c7ccd4'),
+              borderColor: rows.map((r) => r.home ? cssVar('--brand') : cssVar('--border-strong')), borderWidth: 1, borderRadius: 6, maxBarThickness: 26 }] },
+      options: opt,
+      plugins: [garisProv]
+    });
+  }
+
   function buildAllCharts() {
     if (!window.Chart) return;
+    buildBandingChart();
     buildPdrbChart();
     buildIpmChart();
     buildGenerasiChart();
@@ -651,7 +778,8 @@
       demo:   `Mode demo: isi dari simpanan peramban (versi ${INFO.versi || '-'}).`,
       awal:   'Isi dari berkas awal (assets/data.js).'
     };
-    el.textContent = ket[INFO.sumber] || '';
+    const meta = D.meta || {};
+    el.textContent = (ket[INFO.sumber] || '') + (meta.sinkron_terakhir ? ` Angka ditarik otomatis dari Web API BPS, terakhir ${tgl(meta.sinkron_terakhir)}.` : '');
     const spanduk = $('#spandukPratinjau');
     if (spanduk) spanduk.hidden = INFO.sumber !== 'draf';
   }
@@ -757,6 +885,7 @@
     renderSumber();
     renderMap();
     renderRegionDetail();
+    renderBanding();
     renderPeriodeTombol();
     renderVersi();
   }
@@ -781,8 +910,25 @@
     const jeda = new Promise((ok) => setTimeout(() => ok('jeda'), 900));
     let sudahDigambar = false;
 
+    /* Isi terbit di server bisa berasal dari versi berkas yang lebih lama (belum punya kolom
+       pembanding kab/kota, misalnya). Bidang yang belum ada dilengkapi dari berkas awal;
+       yang sudah ada di server tidak pernah ditimpa. */
+    const lengkapi = (data) => {
+      const A = window.INDIKATOR_AWAL || {};
+      if (!data || typeof data !== 'object') return data;
+      if (!data.banding && A.banding) data.banding = JSON.parse(JSON.stringify(A.banding));
+      if (Array.isArray(data.wilayah) && Array.isArray(A.wilayah)) {
+        data.wilayah.forEach((r) => {
+          const a = A.wilayah.find((x) => x.bps && x.bps === r.bps) || A.wilayah.find((x) => x.nama === r.nama);
+          if (!a) return;
+          Object.keys(a).forEach((k) => { if (r[k] === undefined) r[k] = a[k]; });
+        });
+      }
+      return data;
+    };
     const terima = (r) => {
       if (!r || !r.data) return;
+      r.data = lengkapi(r.data);
       const beda = JSON.stringify(r.data) !== JSON.stringify(D);
       INFO = r;
       if (!sudahDigambar) { D = r.data; gambarSemua(); sudahDigambar = true; }

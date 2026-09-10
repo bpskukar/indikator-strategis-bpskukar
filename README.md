@@ -19,6 +19,8 @@ dan gerbang layanan **Katalog Data & PST** (https://bpskukar.github.io/katalog-d
 | **Pencarian & filter** | Cari indikator berdasarkan nama/keterangan, atau saring berdasarkan kategori (demografi, ketenagakerjaan, ekonomi, pembangunan manusia, pemerataan). |
 | **Grafik interaktif** | 5 grafik Chart.js: PDRB triwulanan & tahunan (kombinasi batang + garis), tren IPM 2021–2025, komposisi generasi, indeks kemiskinan P0/P1/P2, dan garis kemiskinan. |
 | **Peta kartogram Kaltim** | 10 kabupaten/kota dengan pewarnaan choropleth. Bisa dialihkan antara jumlah penduduk dan angka kemiskinan; klik untuk melihat rincian. |
+| **Bandingkan kab/kota se-Kaltim** | Peringkat Kukar di antara 10 kabupaten/kota untuk IPM & komponennya, kemiskinan, penduduk (2025, BPS Kaltim); indikator lain tampil bila kolomnya diisi (Ruang Pegawai atau Web API). |
+| **Kartu angka siap bagikan** | Tombol *Bagikan kartu* di tiap indikator: PNG 1080×1080 berlogo PINTAR dengan deret & sumber (`assets/kartu.js`, Web Share di HP). |
 | **Dari angka ke layanan** | Setiap kartu indikator punya tautan *Minta data lengkap* (membuka Katalog Data PST dengan pencarian terisi) dan *Tanya PST* (membuka asisten PST dengan pertanyaannya). |
 | **Isi dikelola pegawai** | Semua angka, grafik, narasi, dan teks dibaca dari tabel `indikator_konten` di Supabase dan disunting dari Ruang Pegawai situs katalog (tab **Indikator**), dengan riwayat versi. |
 | **Bilah PINTAR & mode gelap** | Bilah atas bersama tiga situs dengan menu silang dan tombol tema terang/gelap yang sinkron (satu domain, satu simpanan `kukar-theme`). |
@@ -34,7 +36,8 @@ indikator-strategis-bpskukar/
 │   ├── style.css       # Seluruh gaya + tema terang/gelap
 │   ├── data.js         # Isi awal (benih) & cadangan — setelah terbit di server, bukan lagi sumber utama
 │   ├── muat.js         # Pemuat isi: server → salinan terakhir → data.js
-│   └── app.js          # Render, grafik, filter, peta, interaksi
+│   ├── kartu.js        # Kartu angka siap bagikan (canvas → PNG), dipakai juga beranda PINTAR
+│   └── app.js          # Render, grafik, filter, peta, pembanding kab/kota, interaksi
 └── README.md
 ```
 
