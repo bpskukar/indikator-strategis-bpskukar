@@ -145,11 +145,11 @@ const DATA = {
 
   /* ---------- Komposisi generasi 2025 (%) ---------- */
   generasi: [
-    { nama:'Post Gen Z',                 nilai:23.70, ket:'Lahir 2011–2025 · usia 0–14 tahun',   warna:'#5A3A22' },
-    { nama:'Gen Z',                      nilai:26.90, ket:'Lahir 1996–2010 · usia 15–29 tahun',  warna:'#F5B32B' },
-    { nama:'Milenial',                   nilai:16.20, ket:'Lahir 1981–1995 · usia 30–39 tahun',  warna:'#D9534F' },
-    { nama:'Gen X',                      nilai:24.50, ket:'Lahir 1966–1980 · usia 40–59 tahun',  warna:'#ED7014' },
-    { nama:'Baby Boomer & Pre Boomer',   nilai: 8.80, ket:'Lahir sebelum 1965 · usia 60–75+',    warna:'#C4A484' }
+    { nama:'Post Gen Z',                 nilai:23.70, ket:'Usia 0–14 tahun',   warna:'#5A3A22' },
+    { nama:'Gen Z',                      nilai:26.90, ket:'Usia 15–29 tahun',  warna:'#F5B32B' },
+    { nama:'Milenial',                   nilai:16.20, ket:'Usia 30–39 tahun',  warna:'#D9534F' },
+    { nama:'Gen X',                      nilai:24.50, ket:'Usia 40–59 tahun',  warna:'#ED7014' },
+    { nama:'Baby Boomer & Pre Boomer',   nilai: 8.80, ket:'Usia 60 tahun ke atas',    warna:'#C4A484' }
   ],
 
   demografiStat: [

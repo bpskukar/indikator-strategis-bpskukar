@@ -155,7 +155,7 @@
         ${it.tag ? `<span class="kpi__tag ${it.tagType === 'good' || it.tagType === 'warn' ? it.tagType : ''}">${esc(it.tag)}</span>` : ''}
         <div class="kpi__aksi">
           <a href="${T.katalog}?q=${q}" title="Cari data lengkapnya di Katalog Data PST">Minta data lengkap ${ICON.luar}</a>
-          <a href="${T.katalog}?tanya=${tanya}" title="Tanyakan ke asisten PST">Tanya PST</a>
+          <a href="${T.katalog}?tanya=${tanya}" data-tanya="${esc('berapa ' + it.label + ' Kukar?')}" title="Tanyakan ke asisten PST — terbuka di halaman ini">Tanya PST</a>
           <a href="${T.katalog}glosarium.html#${esc(glos)}" title="Definisi, cara menghitung, dan cara membaca angka ini">Apa ini?</a>
           <button type="button" class="kpi__bagi" data-bagi="${esc(it.id)}" title="Unduh atau bagikan kartu angka ini (PNG)">${ICON.bagi} Bagikan kartu</button>
         </div>
@@ -265,8 +265,8 @@
   /* ---------------- Kartogram Kalimantan Timur ---------------- */
 
   const SCALE = {
-    penduduk: ['#FFF1DF', '#FFD8A8', '#FBB35E', '#F08C2E', '#D45D06'],
-    miskin:   ['#FDE7E4', '#F8C4BE', '#F09A92', '#E06B62', '#C2413A']
+    penduduk: ['#FFF1DF', '#FFD8A8', '#FBB35E', '#E07A1A', '#B5470A'],
+    miskin:   ['#FDE7E4', '#F8C4BE', '#F09A92', '#E27772', '#A9302B']
   };
 
   const totalPenduduk = (w) => angka(w.laki) + angka(w.perempuan);
@@ -289,10 +289,11 @@
       const val  = isPend ? fmt(totalPenduduk(w), 2) : fmt(angka(w.miskin), 2);
       const unit = isPend ? 'ribu jiwa' : '% miskin';
       const bg   = colorFor(w);
+      const gelap = ['#B5470A', '#A9302B'].indexOf(bg) !== -1;   /* sel tergelap tiap skala → teks putih */
       return `
         <button type="button"
                 class="region${w.home ? ' is-home' : ''}${w.nama === state.mapFocus ? ' is-focus' : ''}"
-                style="grid-row:${parseInt(w.row, 10) || 1};grid-column:${parseInt(w.col, 10) || 1};background:${bg};color:#3A2113"
+                style="grid-row:${parseInt(w.row, 10) || 1};grid-column:${parseInt(w.col, 10) || 1};background:${bg};color:${gelap ? '#FFFFFF' : '#2E1A12'}"
                 data-nama="${esc(w.nama)}"
                 aria-label="${esc(w.nama)}: ${val} ${unit}">
           <span class="region__name">${esc(w.nama)}</span>
