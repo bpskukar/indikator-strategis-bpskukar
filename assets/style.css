@@ -78,7 +78,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: calc(var(--nav-h) + 16px);
+  scroll-padding-top: calc(var(--nav-h) + var(--pintar-h, 0px) + 16px);
 }
 
 body {
@@ -106,7 +106,7 @@ a { color: inherit; }
 
 .nav {
   position: sticky;
-  top: 0;
+  top: var(--pintar-h, 0px);
   z-index: 100;
   height: var(--nav-h);
   background: color-mix(in srgb, var(--bg) 88%, transparent);
@@ -154,9 +154,9 @@ a { color: inherit; }
 }
 
 .nav__links a {
-  padding: 8px 12px;
+  padding: 8px 11px;
   border-radius: 999px;
-  font-size: 13.5px;
+  font-size: 13.25px;
   font-weight: 600;
   color: var(--text-soft);
   text-decoration: none;
@@ -165,6 +165,12 @@ a { color: inherit; }
 }
 .nav__links a:hover { background: var(--brand-soft); color: var(--brand-strong); }
 .nav__links a.is-active { background: var(--brand); color: #fff; }
+.nav__links a.luar {
+  display: inline-flex; align-items: center; gap: 5px;
+  margin-left: 6px; border: 1px solid var(--border-strong); color: var(--text);
+}
+.nav__links a.luar:hover { border-color: var(--brand); }
+.drawer a.luar { border-top: 1px solid var(--border); margin-top: 6px; padding-top: 14px; }
 
 .nav__tools { display: flex; align-items: center; gap: 8px; margin-left: 10px; }
 
@@ -186,7 +192,7 @@ a { color: inherit; }
 /* Drawer mobile */
 .drawer {
   position: fixed;
-  inset: var(--nav-h) 0 auto 0;
+  inset: calc(var(--nav-h) + var(--pintar-h, 0px)) 0 auto 0;
   background: var(--surface);
   border-bottom: 1px solid var(--border);
   padding: 12px 20px 18px;
@@ -539,6 +545,38 @@ section.block.alt { background: var(--bg-alt); border-block: 1px solid var(--bor
 
 .kpi.is-hidden { display: none; }
 
+/* tautan "dari angka ke layanan" di kaki tiap kartu */
+.kpi__aksi {
+  display: flex; gap: 12px; flex-wrap: wrap;
+  margin-top: 12px; padding-top: 10px;
+  border-top: 1px dashed var(--border);
+  font-size: 11.5px; font-weight: 700;
+}
+.kpi__aksi a { display: inline-flex; align-items: center; gap: 4px; color: var(--brand-strong); text-decoration: none; }
+.kpi__aksi a + a { color: var(--text-mute); }
+.kpi__aksi a:hover { text-decoration: underline; }
+.alur-catatan { margin: 18px 0 0; font-size: 12.5px; color: var(--text-mute); line-height: 1.55; }
+.alur-catatan b { color: var(--text-soft); }
+
+/* ajakan ke gerbang layanan (PINTAR Kukar) */
+.alur {
+  margin-top: 28px;
+  padding: 26px 28px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(120deg, color-mix(in srgb, var(--brand) 12%, var(--surface)), color-mix(in srgb, #1D5FAD 12%, var(--surface)));
+  border: 1px solid var(--border);
+}
+.alur h3 { margin: 0 0 6px; font-size: 1.15rem; letter-spacing: -.015em; }
+.alur p { margin: 0 0 16px; font-size: 14px; color: var(--text-soft); max-width: 70ch; line-height: 1.6; }
+.alur__tombol { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* spanduk pratinjau draf */
+.pratinjau {
+  background: #FFF1CE; color: #6B4A00; border-bottom: 1px solid #F5D9A8;
+  padding: 9px 20px; font-size: 13px; text-align: center;
+}
+[data-theme="dark"] .pratinjau { background: #3A2C10; color: #FFC44D; border-color: #5A4415; }
+
 .empty-state {
   padding: 40px 20px;
   text-align: center;
@@ -806,9 +844,18 @@ td.num { text-align: right; font-variant-numeric: tabular-nums; font-weight: 700
   .footer__grid { grid-template-columns: 1fr; gap: 26px; }
 }
 
-@media (max-width: 860px) {
+@media (max-width: 1340px) {
+  .brand__sub { display: none; }
+  .nav__links a { padding: 8px 9px; font-size: 12.75px; }
+  .nav__inner { gap: 12px; }
+}
+
+@media (max-width: 1120px) {
   .nav__links { display: none; }
   .nav__burger { display: grid; }
+}
+
+@media (max-width: 860px) {
   section.block { padding: 54px 0; }
   .hero { padding: 46px 0 44px; }
   .chart-box { height: 300px; }

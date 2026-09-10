@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id" data-theme="light">
+<html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,10 +11,13 @@
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="Indikator Strategis Kabupaten Kutai Kartanegara 2026">
-<meta property="og:description" content="Dashboard interaktif indikator strategis Kukar: PDRB, IPM, kemiskinan, demografi, dan ketenagakerjaan.">
+<meta property="og:description" content="Dashboard interaktif indikator strategis Kukar: PDRB, IPM, kemiskinan, demografi, dan ketenagakerjaan. Bagian dari PINTAR Kukar.">
 <meta property="og:locale" content="id_ID">
 
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%23ED7014'/><text y='72' x='50' text-anchor='middle' font-size='58' font-family='sans-serif' font-weight='bold' fill='white'>K</text></svg>">
+
+<!-- PINTAR Kukar: bilah bersama + tema terang/gelap (dipasang sebelum gaya agar tidak berkedip) -->
+<script src="assets/pintar.js" data-situs="indikator"></script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,10 +46,13 @@
       <a href="#kemiskinan">Kemiskinan</a>
       <a href="#rekomendasi">Rekomendasi</a>
       <a href="#sumber">Sumber</a>
+      <a class="luar" href="/katalog-data-bpskukar/" data-pintar="katalog" title="Katalog Data & layanan PST BPS Kukar">
+        Katalog Data
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>
+      </a>
     </nav>
 
     <div class="nav__tools">
-      <button class="icon-btn" id="themeToggle" type="button" aria-label="Ganti tema"></button>
       <button class="icon-btn nav__burger" id="burger" type="button" aria-label="Buka menu"></button>
     </div>
   </div>
@@ -60,6 +66,11 @@
   <a href="#kemiskinan">Kemiskinan</a>
   <a href="#rekomendasi">Rekomendasi</a>
   <a href="#sumber">Sumber</a>
+  <a class="luar" href="/katalog-data-bpskukar/" data-pintar="katalog">Katalog Data / PST BPS Kukar ↗</a>
+</div>
+
+<div class="pratinjau" id="spandukPratinjau" hidden>
+  <b>Pratinjau draf.</b> Yang tampil adalah draf dari Ruang Pegawai yang belum diterbitkan — hanya terlihat di peramban ini.
 </div>
 
 <!-- ============================ HERO ============================ -->
@@ -69,18 +80,14 @@
 
     <div>
       <span class="eyebrow"><b>BPS</b> Kabupaten Kutai Kartanegara</span>
-      <h1>Potret <em>pembangunan daerah</em> Kutai Kartanegara dalam angka</h1>
-      <p class="lede">
-        Ringkasan indikator strategis yang menggambarkan kondisi demografi, ketenagakerjaan,
-        perekonomian, pembangunan manusia, serta pemerataan dan kemiskinan &mdash;
-        disarikan dari Booklet Indikator Strategis Triwulan I dan Triwulan II 2026.
-      </p>
+      <h1 id="heroJudul">Potret <em>pembangunan daerah</em> Kutai Kartanegara dalam angka</h1>
+      <p class="lede" id="heroLede"></p>
       <div class="hero__cta">
         <a class="btn btn--primary" href="#ringkasan">
           Lihat semua indikator
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
-        <a class="btn btn--ghost" href="#rekomendasi">Rekomendasi kebijakan</a>
+        <a class="btn btn--ghost" href="/katalog-data-bpskukar/" data-pintar="katalog">Minta data ke PST</a>
       </div>
     </div>
 
@@ -88,29 +95,9 @@
       <h3>Periode data</h3>
       <p class="period-note"><span class="js-periode-nama">Triwulan II 2026</span> &middot; <span class="js-periode-vol">Volume 2, 2026</span></p>
 
-      <div class="seg" data-seg="periode" style="margin-bottom:16px" role="group" aria-label="Pilih periode">
-        <button type="button" data-value="tw1">Triwulan I</button>
-        <button type="button" data-value="tw2" class="is-active">Triwulan II</button>
-      </div>
+      <div class="seg" data-seg="periode" style="margin-bottom:16px" role="group" aria-label="Pilih periode"></div>
 
-      <div class="mini-grid">
-        <div class="mini">
-          <div class="mini__label">Jumlah Penduduk</div>
-          <div class="mini__value"><span class="js-count" data-value="845621" data-dec="0">0</span></div>
-        </div>
-        <div class="mini">
-          <div class="mini__label">Pertumbuhan Ekonomi</div>
-          <div class="mini__value"><span class="js-count" data-value="3.43" data-dec="2">0</span><small>%</small></div>
-        </div>
-        <div class="mini">
-          <div class="mini__label">Indeks Pembangunan Manusia</div>
-          <div class="mini__value"><span class="js-count" data-value="77.25" data-dec="2">0</span></div>
-        </div>
-        <div class="mini">
-          <div class="mini__label">Pengangguran Terbuka</div>
-          <div class="mini__value"><span class="js-count" data-value="4.40" data-dec="2">0</span><small>%</small></div>
-        </div>
-      </div>
+      <div class="mini-grid" id="heroMini"></div>
     </aside>
 
   </div>
@@ -122,11 +109,7 @@
     <div class="sec-head reveal">
       <span class="sec-kicker">Ringkasan</span>
       <h2>Data Indikator Strategis</h2>
-      <p>
-        Indikator strategis digunakan untuk mengukur <strong>capaian pembangunan daerah</strong> di berbagai bidang,
-        meliputi demografi, ekonomi, kesejahteraan masyarakat, dan kesetaraan gender.
-        Cari indikator, saring berdasarkan kategori, atau bandingkan antarperiode.
-      </p>
+      <p id="pengantar-ringkasan"></p>
     </div>
 
     <div class="controls reveal">
@@ -134,20 +117,10 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
         <input type="search" id="searchInput" placeholder="Cari indikator… misal: IPM, gini, pengangguran" aria-label="Cari indikator">
       </div>
-      <div class="seg" data-seg="periode" role="group" aria-label="Pilih periode">
-        <button type="button" data-value="tw1">Triwulan I 2026</button>
-        <button type="button" data-value="tw2" class="is-active">Triwulan II 2026</button>
-      </div>
+      <div class="seg" data-seg="periode" role="group" aria-label="Pilih periode"></div>
     </div>
 
-    <div class="chips reveal" id="chipKategori" role="group" aria-label="Saring kategori">
-      <button class="chip is-active" data-value="semua">Semua indikator</button>
-      <button class="chip" data-value="demografi">Demografi</button>
-      <button class="chip" data-value="ketenagakerjaan">Ketenagakerjaan</button>
-      <button class="chip" data-value="ekonomi">Ekonomi</button>
-      <button class="chip" data-value="manusia">Pembangunan Manusia</button>
-      <button class="chip" data-value="pemerataan">Pemerataan &amp; Kemiskinan</button>
-    </div>
+    <div class="chips reveal" id="chipKategori" role="group" aria-label="Saring kategori"></div>
 
     <p style="font-size:13px;color:var(--text-mute);margin:0 0 18px">
       Menampilkan <strong id="kpiCount">0</strong> indikator. <span id="periodeCatatan"></span>
@@ -157,6 +130,10 @@
     <div class="empty-state" id="kpiEmpty" hidden>
       Tidak ada indikator yang cocok dengan pencarian atau filter tersebut.
     </div>
+    <p class="alur-catatan">
+      Setiap kartu punya tautan <b>Minta data lengkap</b> — membuka Katalog Data PST dengan pencarian yang sudah terisi — dan
+      <b>Tanya PST</b> untuk menanyakannya ke asisten. Dari angka ke layanan, satu klik.
+    </p>
   </div>
 </section>
 
@@ -166,11 +143,7 @@
     <div class="sec-head reveal">
       <span class="sec-kicker">Bagian B</span>
       <h2>Pertumbuhan &amp; Ukuran Ekonomi</h2>
-      <p>
-        Produk Domestik Regional Bruto (PDRB) adalah nilai keseluruhan semua barang dan jasa yang diproduksi
-        pada suatu wilayah dalam jangka waktu tertentu &mdash; atas dasar harga berlaku (nominal) dan
-        atas dasar harga konstan (riil).
-      </p>
+      <p id="pengantar-ekonomi"></p>
     </div>
 
     <div class="split">
@@ -182,30 +155,14 @@
             <button type="button" data-value="tahun">Tahunan</button>
           </div>
         </div>
-        <p class="card__sub" id="pdrbSub">Perbandingan lima triwulan terakhir, TW I-2025 sampai TW I-2026</p>
+        <p class="card__sub" id="pdrbSub"></p>
         <div class="chart-box tall"><canvas id="chartPdrb"></canvas></div>
       </div>
 
       <div class="note-list reveal" id="narEkonomi"></div>
     </div>
 
-    <div class="banner reveal">
-      <div class="banner__item">
-        <h4>Pertumbuhan Ekonomi Triwulan I-2026 (y-on-y)</h4>
-        <div class="big">2,20%</div>
-        <p>Tumbuh 2,20% dibanding TW I-2025, namun terkontraksi 4,56% dibanding TW IV-2025 (q-to-q).</p>
-      </div>
-      <div class="banner__item amber">
-        <h4>Sektor tumbuh tercepat, TW I-2026</h4>
-        <div class="big">25,97%</div>
-        <p>Sektor Penyediaan Makanan dan Minuman &mdash; kandidat motor pertumbuhan non-ekstraktif.</p>
-      </div>
-      <div class="banner__item">
-        <h4>Kontribusi terhadap PDRB Kaltim</h4>
-        <div class="big">25,64%</div>
-        <p>PDRB ADHB Kukar TW I-2026 sebesar Rp54.915 miliar dari total 10 kabupaten/kota di Kaltim.</p>
-      </div>
-    </div>
+    <div class="banner reveal" id="sorotanEkonomi"></div>
   </div>
 </section>
 
@@ -215,21 +172,18 @@
     <div class="sec-head reveal">
       <span class="sec-kicker">Bagian A</span>
       <h2>Potret Kependudukan</h2>
-      <p>
-        Kutai Kartanegara menduduki <strong>peringkat kedua</strong> sebagai kabupaten/kota dengan jumlah penduduk
-        tertinggi di Kalimantan Timur, dengan struktur usia yang didominasi kelompok produktif.
-      </p>
+      <p id="pengantar-kependudukan"></p>
     </div>
 
     <div class="card reveal" style="margin-bottom:22px">
       <div class="card__head">
-        <h3 class="card__title">Peta Sebaran Kabupaten/Kota di Kalimantan Timur, 2025</h3>
+        <h3 class="card__title" id="petaJudul"></h3>
         <div class="seg" data-seg="map" role="group" aria-label="Pilih metrik peta">
           <button type="button" data-value="penduduk" class="is-active">Jumlah Penduduk</button>
           <button type="button" data-value="miskin">Angka Kemiskinan</button>
         </div>
       </div>
-      <p class="card__sub">Kartogram skematis &mdash; posisi kotak mendekati letak geografis. Klik atau arahkan kursor untuk melihat rincian.</p>
+      <p class="card__sub" id="petaSub"></p>
 
       <div class="map-shell">
         <div class="cartogram" id="cartogram"></div>
@@ -240,34 +194,21 @@
             <span id="legendHi">Banyak</span>
           </div>
           <div class="region-detail" id="regionDetail"></div>
-          <p style="font-size:12px;color:var(--text-mute);margin:0;line-height:1.55">
-            Kutai Kartanegara termasuk <strong>5 besar</strong> wilayah dengan angka kemiskinan tertinggi di Kalimantan Timur.
-          </p>
+          <p style="font-size:12px;color:var(--text-mute);margin:0;line-height:1.55" id="petaCatatan"></p>
         </div>
       </div>
     </div>
 
     <div class="split-even">
       <div class="card reveal">
-        <h3 class="card__title">Komposisi Penduduk Menurut Generasi, 2025</h3>
-        <p class="card__sub">Gen Z dan Post Gen Z menyumbang lebih dari separuh penduduk &mdash; peluang bonus demografi.</p>
+        <h3 class="card__title" id="generasiJudul"></h3>
+        <p class="card__sub" id="generasiSub"></p>
         <div class="chart-box"><canvas id="chartGenerasi"></canvas></div>
       </div>
 
       <div class="reveal">
         <div class="stat-row" id="demografiStat" style="margin-bottom:16px"></div>
-        <div class="note">
-          <h4>Total Penduduk Kutai Kartanegara 2025</h4>
-          <p><strong>845,62 ribu jiwa</strong> (438,02 ribu laki-laki dan 407,60 ribu perempuan).
-          Jumlah populasi tergolong cukup besar untuk ukuran kabupaten di Kalimantan Timur, yang menjadi
-          modal penting sekaligus beban pembangunan jika tidak dikelola dengan baik.</p>
-        </div>
-        <div class="note" style="margin-top:12px;border-left-color:var(--teal)">
-          <h4>Ketenagakerjaan</h4>
-          <p>TPAK <strong>65,38%</strong> menunjukkan lebih dari separuh penduduk usia kerja berpartisipasi aktif
-          di pasar kerja. Sisanya <strong>34,62%</strong> tidak tergolong angkatan kerja (pelajar, ibu rumah tangga,
-          atau penerima pendapatan pasif). TPT <strong>4,40%</strong> tergolong relatif rendah dan terkendali.</p>
-        </div>
+        <div class="note-list" id="catatanKependudukan"></div>
       </div>
     </div>
   </div>
@@ -279,25 +220,20 @@
     <div class="sec-head reveal">
       <span class="sec-kicker">Bagian C</span>
       <h2>Pembangunan Manusia &amp; Kesejahteraan</h2>
-      <p>
-        Indeks Pembangunan Manusia Kutai Kartanegara tahun 2025 mencapai <strong>77,25</strong> &mdash;
-        kategori Tinggi, dan meningkat konsisten sejak 2021.
-      </p>
+      <p id="pengantar-manusia"></p>
     </div>
 
     <div class="split">
       <div class="card reveal">
-        <h3 class="card__title">Perkembangan IPM 2021&ndash;2025</h3>
-        <p class="card__sub">Peningkatan tahun 2025 didorong oleh naiknya seluruh indikator penyusun.</p>
+        <h3 class="card__title" id="ipmJudul"></h3>
+        <p class="card__sub" id="ipmSub"></p>
         <div class="chart-box"><canvas id="chartIpm"></canvas></div>
       </div>
 
       <div class="card reveal">
-        <h3 class="card__title">Indikator Penyusun IPM</h3>
-        <p class="card__sub">Perubahan dibanding tahun 2024</p>
-        <dl id="ipmKomponen" style="margin:0;display:grid;gap:10px">
-          <!-- diisi oleh app.js, memakai gaya .row dari region-detail -->
-        </dl>
+        <h3 class="card__title" id="ipmJudulKomponen"></h3>
+        <p class="card__sub" id="ipmSubKomponen"></p>
+        <dl id="ipmKomponen" style="margin:0;display:grid;gap:10px"></dl>
       </div>
     </div>
 
@@ -311,55 +247,30 @@
     <div class="sec-head reveal">
       <span class="sec-kicker">Bagian D</span>
       <h2>Profil Kemiskinan &amp; Pemerataan</h2>
-      <p>
-        Persentase penduduk miskin turun konsisten menjadi <strong>6,72%</strong> pada 2025,
-        namun indeks kedalaman (P1) dan keparahan (P2) justru naik &mdash; sinyal bahwa penduduk
-        yang masih miskin berada semakin jauh di bawah garis kemiskinan.
-      </p>
+      <p id="pengantar-kemiskinan"></p>
     </div>
 
     <div class="split-even">
       <div class="card reveal">
-        <h3 class="card__title">P0, P1, dan P2 Kemiskinan 2021&ndash;2025</h3>
-        <p class="card__sub">P0 pada sumbu kanan (%), P1 dan P2 pada sumbu kiri (indeks).</p>
+        <h3 class="card__title" id="kemiskinanJudul"></h3>
+        <p class="card__sub" id="kemiskinanSub"></p>
         <div class="chart-box"><canvas id="chartKemiskinan"></canvas></div>
       </div>
 
       <div class="card reveal">
-        <h3 class="card__title">Perkembangan Garis Kemiskinan 2021&ndash;2025</h3>
-        <p class="card__sub">Rupiah per kapita per bulan.</p>
+        <h3 class="card__title" id="garisJudul"></h3>
+        <p class="card__sub" id="garisSub"></p>
         <div class="chart-box"><canvas id="chartGaris"></canvas></div>
       </div>
     </div>
 
-    <div class="banner reveal">
-      <div class="banner__item amber">
-        <h4>Penduduk miskin 2025</h4>
-        <div class="big">6&ndash;7 dari 100</div>
-        <p>Sekitar 6 sampai 7 dari 100 penduduk masih mengalami kemiskinan pada tahun 2025.</p>
-      </div>
-      <div class="banner__item">
-        <h4>Garis kemiskinan 2025</h4>
-        <div class="big">Rp705.397</div>
-        <p>Naik Rp22.907 dibanding 2024. Penduduk berkategori miskin bila pengeluaran per kapita per bulan di bawah angka ini.</p>
-      </div>
-      <div class="banner__item amber">
-        <h4>Penduduk rentan miskin</h4>
-        <div class="big">18,29%</div>
-        <p>Kelompok yang berisiko jatuh ke bawah garis kemiskinan bila terjadi inflasi atau gejolak ekonomi.</p>
-      </div>
-    </div>
+    <div class="banner reveal" id="sorotanKemiskinan"></div>
 
     <div class="note-list reveal" id="narPemerataan" style="margin-top:22px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));display:grid;gap:12px"></div>
 
     <div class="card reveal" style="margin-top:22px;border-left:4px solid var(--brand)">
-      <h3 class="card__title">Catatan penutup booklet</h3>
-      <p style="margin:8px 0 0;color:var(--text-soft);font-size:14.5px;line-height:1.65">
-        Kabupaten Kutai Kartanegara memiliki <strong>fondasi ekonomi makro yang sangat kuat</strong> dengan kualitas
-        pembangunan manusia (IPM) yang tinggi. Tantangan utamanya adalah <strong>menjaga laju pertumbuhan ekonomi</strong>
-        agar tetap stabil melalui diversifikasi sektor, serta terus <strong>mendorong peningkatan Rata-Rata Lama Sekolah (RLS)</strong>
-        ke jenjang pendidikan tinggi.
-      </p>
+      <h3 class="card__title" id="penutupJudul"></h3>
+      <p style="margin:8px 0 0;color:var(--text-soft);font-size:14.5px;line-height:1.65" id="penutupIsi"></p>
     </div>
   </div>
 </section>
@@ -370,7 +281,7 @@
     <div class="sec-head reveal">
       <span class="sec-kicker">Rekomendasi</span>
       <h2>Rekomendasi Kebijakan</h2>
-      <p>Lima arah kebijakan yang dirumuskan dalam Booklet Indikator Strategis Triwulan II 2026. Klik untuk membuka rinciannya.</p>
+      <p id="pengantar-rekomendasi"></p>
     </div>
     <div class="acc" id="accRekom"></div>
   </div>
@@ -382,11 +293,7 @@
     <div class="sec-head reveal">
       <span class="sec-kicker">Metodologi</span>
       <h2>Sumber Data &amp; Catatan</h2>
-      <p>
-        Seluruh angka pada halaman ini disalin apa adanya dari Booklet Indikator Strategis Kabupaten
-        Kutai Kartanegara yang diterbitkan BPS Kabupaten Kutai Kartanegara. Halaman ini adalah penyajian ulang
-        dalam bentuk web, bukan publikasi resmi BPS.
-      </p>
+      <p id="pengantar-sumber"></p>
     </div>
 
     <div class="table-wrap reveal">
@@ -418,11 +325,18 @@
       </div>
     </div>
 
-    <p style="margin-top:26px;font-size:13.5px;color:var(--text-mute);line-height:1.65">
-      <strong>Catatan angka PDRB tahunan:</strong> tanda * menunjukkan angka sementara dan ** angka sangat sementara,
-      sesuai penulisan pada booklet asli. Angka kependudukan kabupaten/kota merupakan hasil proyeksi penduduk
-      2020&ndash;2035 berbasis Sensus Penduduk 2020.
-    </p>
+    <p style="margin-top:26px;font-size:13.5px;color:var(--text-mute);line-height:1.65" id="catatanSumber"></p>
+
+    <div class="alur reveal">
+      <h3>Butuh angka yang lebih rinci dari yang tampil di sini?</h3>
+      <p>Situs ini bagian dari <b>PINTAR Kukar</b> — Pusat Informasi &amp; Layanan Statistik Terpadu BPS Kabupaten Kutai Kartanegara.
+        Angka di sini adalah ringkasan; data lengkapnya, tabel per kecamatan, dan konsultasi dengan pegawai BPS ada di gerbang layanan.</p>
+      <div class="alur__tombol">
+        <a class="btn btn--primary" href="/katalog-data-bpskukar/" data-pintar="katalog">Buka Katalog Data</a>
+        <a class="btn btn--ghost" href="/katalog-data-bpskukar/konsultasi.html" data-pintar="konsultasi">Konsultasi daring via Zoom</a>
+        <a class="btn btn--ghost" href="/katalog-data-bpskukar/?tanya=data%20apa%20saja%20yang%20tersedia" data-pintar="">Tanya asisten PST</a>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -438,13 +352,8 @@
             <span class="brand__sub">Booklet BPS 2026</span>
           </span>
         </a>
-        <p>
-          Penyajian ulang Booklet Indikator Strategis Kabupaten Kutai Kartanegara Triwulan I dan II 2026
-          dalam bentuk dashboard web interaktif. Bukan produk resmi Badan Pusat Statistik.
-        </p>
-        <p style="font-weight:700;color:var(--brand)">
-          Bersama data, wujudkan Kutai Kartanegara maju, inklusif, dan berkelanjutan.
-        </p>
+        <p id="footerDeskripsi"></p>
+        <p style="font-weight:700;color:var(--brand)" id="footerSlogan"></p>
       </div>
 
       <div>
@@ -460,7 +369,15 @@
       </div>
 
       <div>
-        <h5>Sumber resmi</h5>
+        <h5>PINTAR Kukar</h5>
+        <ul>
+          <li><a href="/" data-pintar="pintu">Beranda PINTAR Kukar</a></li>
+          <li><a href="/katalog-data-bpskukar/" data-pintar="katalog">Katalog Data &amp; layanan PST</a></li>
+          <li><a href="/katalog-data-bpskukar/konsultasi.html" data-pintar="konsultasi">Konsultasi daring</a></li>
+          <li><a href="/katalog-data-bpskukar/sahabat.html" data-pintar="sahabat">Cek status tiket</a></li>
+          <li><a href="/katalog-data-bpskukar/admin.html" data-pintar="pegawai">Ruang pegawai</a></li>
+        </ul>
+        <h5 style="margin-top:18px">Sumber resmi</h5>
         <ul>
           <li><a href="https://kukarkab.bps.go.id" target="_blank" rel="noopener">BPS Kabupaten Kutai Kartanegara</a></li>
           <li><a href="https://kaltim.bps.go.id" target="_blank" rel="noopener">BPS Provinsi Kalimantan Timur</a></li>
@@ -471,6 +388,7 @@
 
     <div class="footer__bar">
       <span>&copy; <span id="tahunFooter">2026</span> &middot; Data bersumber dari BPS Kabupaten Kutai Kartanegara</span>
+      <span id="infoVersi"></span>
       <span>Data mencerdaskan bangsa</span>
     </div>
   </div>
@@ -481,7 +399,11 @@
 </button>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<!-- Satu sumber kunci: konfigurasi Supabase dibaca dari situs katalog (satu domain).
+     Bila berkas itu tidak ada (mis. dibuka lokal), situs tetap jalan memakai assets/data.js. -->
+<script src="/katalog-data-bpskukar/assets/config.js"></script>
 <script src="assets/data.js"></script>
+<script src="assets/muat.js"></script>
 <script src="assets/app.js"></script>
 </body>
 </html>

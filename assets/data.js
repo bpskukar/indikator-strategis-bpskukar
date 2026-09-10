@@ -4,14 +4,23 @@
      • Volume 1, Triwulan I 2026 (terbit Juni 2026)
      • Volume 2, Triwulan II 2026 (terbit Juli 2026)
    Seluruh angka disalin apa adanya dari booklet.
+
+   PERAN BERKAS INI SEJAK PINTAR KUKAR:
+   • Isi awal (benih) untuk tabel indikator_konten di Supabase — dimuat sekali
+     lewat Ruang Pegawai → tab Indikator → "Muat dari berkas awal".
+   • Cadangan bila server tidak terjangkau. Setelah data ada di server,
+     yang tampil di situs adalah versi server, bukan berkas ini.
+   Teks boleh memakai **tebal** (dua bintang) — dirender sebagai huruf tebal.
    ========================================================================== */
 
 const DATA = {
 
   /* ---------- Metadata periode ---------- */
   periode: {
-    tw1: { kode: 'tw1', nama: 'Triwulan I 2026',  volume: 'Volume 1, 2026', terbit: 'Juni 2026' },
-    tw2: { kode: 'tw2', nama: 'Triwulan II 2026', volume: 'Volume 2, 2026', terbit: 'Juli 2026' }
+    tw1: { kode: 'tw1', nama: 'Triwulan I 2026',  volume: 'Volume 1, 2026', terbit: 'Juni 2026',
+           catatan: 'Booklet Triwulan I belum memuat indikator kemiskinan pada halaman indikator strategis; angka lain identik dengan Triwulan II karena bersumber dari rilis tahunan yang sama.' },
+    tw2: { kode: 'tw2', nama: 'Triwulan II 2026', volume: 'Volume 2, 2026', terbit: 'Juli 2026',
+           catatan: 'Booklet Triwulan II menambahkan indikator kemiskinan: Persentase Penduduk Miskin (P0) dan Penduduk Rentan Miskin.' }
   },
 
   /* ---------- Indikator strategis ----------
@@ -102,6 +111,7 @@ const DATA = {
 
   /* ---------- PDRB triwulanan (miliar rupiah) ---------- */
   pdrbTriwulan: {
+    sub:   'Perbandingan lima triwulan terakhir, TW I-2025 sampai TW I-2026',
     label: ['TW I-2025','TW II-2025','TW III-2025','TW IV-2025','TW I-2026'],
     adhb:  [51774.49, 52469.19, 51461.29, 54948.47, 54915.00],
     adhk:  [35979.64, 36732.85, 36672.09, 38524.76, 36769.75],
@@ -110,6 +120,7 @@ const DATA = {
 
   /* ---------- PDRB tahunan (miliar rupiah) ---------- */
   pdrbTahun: {
+    sub:   'Perkembangan tahunan 2021–2025. *angka sementara  **angka sangat sementara',
     label: ['2021','2022','2023','2024*','2025**'],
     adhb:  [177416.58, 240392.59, 204872.66, 204698.39, 210653.44],
     adhk:  [124197.10, 128798.43, 135406.05, 143008.83, 147909.34],
@@ -118,6 +129,10 @@ const DATA = {
 
   /* ---------- IPM ---------- */
   ipm: {
+    judul: 'Perkembangan IPM 2021–2025',
+    sub:   'Peningkatan tahun 2025 didorong oleh naiknya seluruh indikator penyusun.',
+    judulKomponen: 'Indikator Penyusun IPM',
+    subKomponen:   'Perubahan dibanding tahun 2024',
     label: ['2021','2022','2023','2024','2025'],
     nilai: [74.69, 75.31, 75.95, 76.57, 77.25],
     komponen: [
@@ -146,6 +161,10 @@ const DATA = {
 
   /* ---------- Kemiskinan ---------- */
   kemiskinan: {
+    judul:      'P0, P1, dan P2 Kemiskinan 2021–2025',
+    sub:        'P0 pada sumbu kanan (%), P1 dan P2 pada sumbu kiri (indeks).',
+    judulGaris: 'Perkembangan Garis Kemiskinan 2021–2025',
+    subGaris:   'Rupiah per kapita per bulan.',
     label: ['2021','2022','2023','2024','2025'],
     p0: [7.99, 7.96, 7.61, 7.28, 6.72],
     p1: [1.22, 1.18, 0.91, 0.65, 0.79],
@@ -197,21 +216,21 @@ const DATA = {
   /* ---------- Narasi tematik ---------- */
   narasi: {
     ekonomi: [
-      ['PDRB Harga Berlaku — Rp210.653,44 miliar','Menunjukkan nilai total produk dan jasa yang dihasilkan secara nominal sangat besar, mencerminkan besarnya skala <strong>ekonomi daerah Kukar yang disokong oleh sektor-sektor unggulan</strong> (seperti pertambangan/energi).'],
-      ['PDRB Harga Konstan — Rp147.909,34 miliar','Nilai riil ekonomi Kukar (tanpa pengaruh inflasi) menunjukkan kapasitas produksi riil daerah yang <strong>kokoh</strong>.'],
-      ['Laju Pertumbuhan Ekonomi — 3,43%','Ekonomi Kukar mengalami <strong>pertumbuhan positif secara tahunan</strong>. Meskipun tumbuh positif, lajunya berada di tingkat yang moderat, menandakan diperlukannya diversifikasi ekonomi agar tidak hanya bergantung pada sektor ekstraktif.'],
-      ['PDRB Per Kapita — Rp249,11 juta','Rata-rata output ekonomi per penduduk sangat tinggi, mengindikasikan bahwa Kukar adalah daerah <strong>berpendapatan/produksi tinggi per kapita secara makro</strong>.']
+      ['PDRB Harga Berlaku — Rp210.653,44 miliar','Menunjukkan nilai total produk dan jasa yang dihasilkan secara nominal sangat besar, mencerminkan besarnya skala **ekonomi daerah Kukar yang disokong oleh sektor-sektor unggulan** (seperti pertambangan/energi).'],
+      ['PDRB Harga Konstan — Rp147.909,34 miliar','Nilai riil ekonomi Kukar (tanpa pengaruh inflasi) menunjukkan kapasitas produksi riil daerah yang **kokoh**.'],
+      ['Laju Pertumbuhan Ekonomi — 3,43%','Ekonomi Kukar mengalami **pertumbuhan positif secara tahunan**. Meskipun tumbuh positif, lajunya berada di tingkat yang moderat, menandakan diperlukannya diversifikasi ekonomi agar tidak hanya bergantung pada sektor ekstraktif.'],
+      ['PDRB Per Kapita — Rp249,11 juta','Rata-rata output ekonomi per penduduk sangat tinggi, mengindikasikan bahwa Kukar adalah daerah **berpendapatan/produksi tinggi per kapita secara makro**.']
     ],
     manusia: [
-      ['Umur Harapan Hidup — 74,65 tahun','Tingkat kesehatan masyarakat dan kualitas derajat kesehatan (akses medis, sanitasi, dan gizi) <strong>sudah sangat baik</strong>, tercermin dari harapan hidup yang melampaui 74 tahun.'],
-      ['Harapan Lama Sekolah — 13,85 tahun','Anak-anak usia sekolah diperkirakan dapat menempuh pendidikan hingga jenjang Diploma I / semester awal perguruan tinggi. Ini <strong>mencerminkan akses pendidikan dasar-menengah yang sudah terjamin</strong>.'],
-      ['Rata-Rata Lama Sekolah — 9,28 tahun','Rata-rata penduduk usia 25 tahun ke atas menamatkan pendidikan setara kelas 9 (SMP). Terdapat gap antara HLS dan RLS, yang <strong>mengindikasikan generasi muda memiliki peluang pendidikan jauh lebih tinggi dibanding generasi sebelumnya</strong>.'],
-      ['Pengeluaran Per Kapita — Rp13.365 ribu','Pengeluaran riil per orang per tahun mencapai sekitar Rp13,36 juta, <strong>menggambarkan tingkat daya beli dan standar hidup riil masyarakat yang cukup memadai</strong>.'],
-      ['IPM — 77,25','Skor IPM tergolong kategori Tinggi (di atas 70–80). Hal ini mengonfirmasi bahwa <strong>pembangunan manusia di Kukar seimbang dan progresif</strong> dari segi kesehatan, pendidikan, maupun standar hidup layak.']
+      ['Umur Harapan Hidup — 74,65 tahun','Tingkat kesehatan masyarakat dan kualitas derajat kesehatan (akses medis, sanitasi, dan gizi) **sudah sangat baik**, tercermin dari harapan hidup yang melampaui 74 tahun.'],
+      ['Harapan Lama Sekolah — 13,85 tahun','Anak-anak usia sekolah diperkirakan dapat menempuh pendidikan hingga jenjang Diploma I / semester awal perguruan tinggi. Ini **mencerminkan akses pendidikan dasar-menengah yang sudah terjamin**.'],
+      ['Rata-Rata Lama Sekolah — 9,28 tahun','Rata-rata penduduk usia 25 tahun ke atas menamatkan pendidikan setara kelas 9 (SMP). Terdapat gap antara HLS dan RLS, yang **mengindikasikan generasi muda memiliki peluang pendidikan jauh lebih tinggi dibanding generasi sebelumnya**.'],
+      ['Pengeluaran Per Kapita — Rp13.365 ribu','Pengeluaran riil per orang per tahun mencapai sekitar Rp13,36 juta, **menggambarkan tingkat daya beli dan standar hidup riil masyarakat yang cukup memadai**.'],
+      ['IPM — 77,25','Skor IPM tergolong kategori Tinggi (di atas 70–80). Hal ini mengonfirmasi bahwa **pembangunan manusia di Kukar seimbang dan progresif** dari segi kesehatan, pendidikan, maupun standar hidup layak.']
     ],
     pemerataan: [
-      ['Koefisien Gini — 0,285','Angka di bawah 0,33 menunjukkan bahwa ketimpangan pendapatan antarpenduduk di Kukar <strong>tergolong rendah</strong>. Hasil pertumbuhan ekonomi relatif terdistribusi dengan baik di masyarakat.'],
-      ['Indeks Ketimpangan Gender — 0,349','Nilai IKG yang relatif rendah (mendekati 0) mengindikasikan bahwa ketimpangan antara laki-laki dan perempuan dalam hal kesehatan reproduksi, pemberdayaan, dan pasar kerja <strong>semakin menipis</strong>.']
+      ['Koefisien Gini — 0,285','Angka di bawah 0,33 menunjukkan bahwa ketimpangan pendapatan antarpenduduk di Kukar **tergolong rendah**. Hasil pertumbuhan ekonomi relatif terdistribusi dengan baik di masyarakat.'],
+      ['Indeks Ketimpangan Gender — 0,349','Nilai IKG yang relatif rendah (mendekati 0) mengindikasikan bahwa ketimpangan antara laki-laki dan perempuan dalam hal kesehatan reproduksi, pemberdayaan, dan pasar kerja **semakin menipis**.']
     ]
   },
 
@@ -223,5 +242,75 @@ const DATA = {
     ['Survei Angkatan Kerja Nasional (Sakernas)','Badan Pusat Statistik'],
     ['Hasil Proyeksi Penduduk Kabupaten/Kota Provinsi Kalimantan Timur 2020–2035 (SP2020)','Badan Pusat Statistik'],
     ['Produk Domestik Regional Bruto Kabupaten/Kota','BPS Provinsi Kalimantan Timur']
-  ]
+  ],
+
+  /* ---------- Angka sorotan (kotak berwarna di bawah grafik) ----------
+     gaya: '' = oranye, 'amber' = kuning
+  ---------------------------------------------------------------------- */
+  sorotan: {
+    ekonomi: [
+      { judul:'Pertumbuhan Ekonomi Triwulan I-2026 (y-on-y)', nilai:'2,20%',  gaya:'',
+        ket:'Tumbuh 2,20% dibanding TW I-2025, namun terkontraksi 4,56% dibanding TW IV-2025 (q-to-q).' },
+      { judul:'Sektor tumbuh tercepat, TW I-2026',            nilai:'25,97%', gaya:'amber',
+        ket:'Sektor Penyediaan Makanan dan Minuman — kandidat motor pertumbuhan non-ekstraktif.' },
+      { judul:'Kontribusi terhadap PDRB Kaltim',              nilai:'25,64%', gaya:'',
+        ket:'PDRB ADHB Kukar TW I-2026 sebesar Rp54.915 miliar dari total 10 kabupaten/kota di Kaltim.' }
+    ],
+    kemiskinan: [
+      { judul:'Penduduk miskin 2025',   nilai:'6–7 dari 100', gaya:'amber',
+        ket:'Sekitar 6 sampai 7 dari 100 penduduk masih mengalami kemiskinan pada tahun 2025.' },
+      { judul:'Garis kemiskinan 2025',  nilai:'Rp705.397',    gaya:'',
+        ket:'Naik Rp22.907 dibanding 2024. Penduduk berkategori miskin bila pengeluaran per kapita per bulan di bawah angka ini.' },
+      { judul:'Penduduk rentan miskin', nilai:'18,29%',       gaya:'amber',
+        ket:'Kelompok yang berisiko jatuh ke bawah garis kemiskinan bila terjadi inflasi atau gejolak ekonomi.' }
+    ]
+  },
+
+  /* ---------- Teks halaman (judul, pengantar, catatan) ----------
+     Semua yang memuat angka ditaruh di sini supaya bisa diperbaiki dari
+     Ruang Pegawai tanpa menyentuh HTML. **tebal** = huruf tebal.
+  ------------------------------------------------------------------ */
+  teks: {
+    hero: {
+      judul: 'Potret **pembangunan daerah** Kutai Kartanegara dalam angka',
+      lede:  'Ringkasan indikator strategis yang menggambarkan kondisi demografi, ketenagakerjaan, perekonomian, pembangunan manusia, serta pemerataan dan kemiskinan — disarikan dari Booklet Indikator Strategis Triwulan I dan Triwulan II 2026.',
+      mini:  ['penduduk', 'lpe', 'ipm', 'tpt']
+    },
+    pengantar: {
+      ringkasan:   'Indikator strategis digunakan untuk mengukur **capaian pembangunan daerah** di berbagai bidang, meliputi demografi, ekonomi, kesejahteraan masyarakat, dan kesetaraan gender. Cari indikator, saring berdasarkan kategori, atau bandingkan antarperiode.',
+      ekonomi:     'Produk Domestik Regional Bruto (PDRB) adalah nilai keseluruhan semua barang dan jasa yang diproduksi pada suatu wilayah dalam jangka waktu tertentu — atas dasar harga berlaku (nominal) dan atas dasar harga konstan (riil).',
+      kependudukan:'Kutai Kartanegara menduduki **peringkat kedua** sebagai kabupaten/kota dengan jumlah penduduk tertinggi di Kalimantan Timur, dengan struktur usia yang didominasi kelompok produktif.',
+      manusia:     'Indeks Pembangunan Manusia Kutai Kartanegara tahun 2025 mencapai **77,25** — kategori Tinggi, dan meningkat konsisten sejak 2021.',
+      kemiskinan:  'Persentase penduduk miskin turun konsisten menjadi **6,72%** pada 2025, namun indeks kedalaman (P1) dan keparahan (P2) justru naik — sinyal bahwa penduduk yang masih miskin berada semakin jauh di bawah garis kemiskinan.',
+      rekomendasi: 'Lima arah kebijakan yang dirumuskan dalam Booklet Indikator Strategis Triwulan II 2026. Klik untuk membuka rinciannya.',
+      sumber:      'Seluruh angka pada halaman ini disalin apa adanya dari Booklet Indikator Strategis Kabupaten Kutai Kartanegara yang diterbitkan BPS Kabupaten Kutai Kartanegara. Halaman ini adalah penyajian ulang dalam bentuk web, bukan publikasi resmi BPS.'
+    },
+    peta: {
+      judul:   'Peta Sebaran Kabupaten/Kota di Kalimantan Timur, 2025',
+      sub:     'Kartogram skematis — posisi kotak mendekati letak geografis. Klik atau arahkan kursor untuk melihat rincian.',
+      catatan: 'Kutai Kartanegara termasuk **5 besar** wilayah dengan angka kemiskinan tertinggi di Kalimantan Timur.'
+    },
+    generasi: {
+      judul: 'Komposisi Penduduk Menurut Generasi, 2025',
+      sub:   'Gen Z dan Post Gen Z menyumbang lebih dari separuh penduduk — peluang bonus demografi.'
+    },
+    catatanKependudukan: [
+      { judul:'Total Penduduk Kutai Kartanegara 2025', warna:'',
+        isi:'**845,62 ribu jiwa** (438,02 ribu laki-laki dan 407,60 ribu perempuan). Jumlah populasi tergolong cukup besar untuk ukuran kabupaten di Kalimantan Timur, yang menjadi modal penting sekaligus beban pembangunan jika tidak dikelola dengan baik.' },
+      { judul:'Ketenagakerjaan', warna:'teal',
+        isi:'TPAK **65,38%** menunjukkan lebih dari separuh penduduk usia kerja berpartisipasi aktif di pasar kerja. Sisanya **34,62%** tidak tergolong angkatan kerja (pelajar, ibu rumah tangga, atau penerima pendapatan pasif). TPT **4,40%** tergolong relatif rendah dan terkendali.' }
+    ],
+    penutup: {
+      judul: 'Catatan penutup booklet',
+      isi:   'Kabupaten Kutai Kartanegara memiliki **fondasi ekonomi makro yang sangat kuat** dengan kualitas pembangunan manusia (IPM) yang tinggi. Tantangan utamanya adalah **menjaga laju pertumbuhan ekonomi** agar tetap stabil melalui diversifikasi sektor, serta terus **mendorong peningkatan Rata-Rata Lama Sekolah (RLS)** ke jenjang pendidikan tinggi.'
+    },
+    catatanSumber: 'Tanda * menunjukkan angka sementara dan ** angka sangat sementara, sesuai penulisan pada booklet asli. Angka kependudukan kabupaten/kota merupakan hasil proyeksi penduduk 2020–2035 berbasis Sensus Penduduk 2020.',
+    footer: {
+      deskripsi: 'Penyajian ulang Booklet Indikator Strategis Kabupaten Kutai Kartanegara Triwulan I dan II 2026 dalam bentuk dashboard web interaktif. Bukan produk resmi Badan Pusat Statistik.',
+      slogan:    'Bersama data, wujudkan Kutai Kartanegara maju, inklusif, dan berkelanjutan.'
+    }
+  }
 };
+
+/* Dipakai pemuat data (assets/muat.js) sebagai cadangan dan benih. */
+window.INDIKATOR_AWAL = DATA;
