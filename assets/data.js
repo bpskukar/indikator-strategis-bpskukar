@@ -199,6 +199,38 @@ const DATA = {
     { nama:'Balikpapan',          kode:'BPP', bps:'6471', ipm:83.23, uhh:76.24, hls:14.26, rls:11.04, ppp:17482, laki:369.83, perempuan:355.61, miskin:1.97,  row:5, col:3 }
   ],
 
+  /* ---------- 20 kecamatan ----------
+     Dipakai asisten PST ("penduduk Tenggarong berapa?", "kecamatan terluas?").
+     Diisi pegawai dari Kabupaten Kutai Kartanegara Dalam Angka: Ruang Pegawai →
+     Indikator → Kecamatan. penduduk/laki/perempuan = jiwa, luas = km², desa &
+     kelurahan = jumlah. null = belum diisi (asisten mengarahkan ke publikasinya).
+  ------------------------------------ */
+  kecamatan: {
+    tahun: '', sumber: 'Kabupaten Kutai Kartanegara Dalam Angka 2026',
+    daftar: [
+      { nama:'Samboja', penduduk:null, laki:null, perempuan:null, luas:null, desa:null, kelurahan:null },
+      { nama:'Samboja Barat', penduduk:null, laki:null, perempuan:null, luas:null, desa:null, kelurahan:null },
+      { nama:'Muara Jawa', penduduk:null, laki:null, perempuan:null, luas:null, desa:null, kelurahan:null },
+      { nama:'Sanga-Sanga', penduduk:null, laki:null, perempuan:null, luas:null, desa:null, kelurahan:null },
+      { nama:'Loa Janan', penduduk:null, laki:null, perempuan:null, luas:null, desa:null, kelurahan:null },
+      { nama:'Loa Kulu', penduduk:null, laki:null, perempuan:null, luas:null, desa:null, kelurahan:null },
+      { nama:'Muara Muntai', penduduk:null, laki:null, perempuan:null, luas:null, desa:null, kelurahan:null },
+      { nama:'Muara Wis', penduduk:null, laki:null, perempuan:null, luas:null, desa:null, kelurahan:null },
+      { nama:'Kota Bangun', penduduk:null, laki:null, perempuan:null, luas:null, desa:null, kelurahan:null },
+      { nama:'Kota Bangun Darat', penduduk:null, laki:null, perempuan:null, luas:null, desa:null, kelurahan:null },
+      { nama:'Tenggarong', penduduk:null, laki:null, perempuan:null, luas:null, desa:null, kelurahan:null },
+      { nama:'Sebulu', penduduk:null, laki:null, perempuan:null, luas:null, desa:null, kelurahan:null },
+      { nama:'Tenggarong Seberang', penduduk:null, laki:null, perempuan:null, luas:null, desa:null, kelurahan:null },
+      { nama:'Anggana', penduduk:null, laki:null, perempuan:null, luas:null, desa:null, kelurahan:null },
+      { nama:'Muara Badak', penduduk:null, laki:null, perempuan:null, luas:null, desa:null, kelurahan:null },
+      { nama:'Marang Kayu', penduduk:null, laki:null, perempuan:null, luas:null, desa:null, kelurahan:null },
+      { nama:'Muara Kaman', penduduk:null, laki:null, perempuan:null, luas:null, desa:null, kelurahan:null },
+      { nama:'Kenohan', penduduk:null, laki:null, perempuan:null, luas:null, desa:null, kelurahan:null },
+      { nama:'Kembang Janggut', penduduk:null, laki:null, perempuan:null, luas:null, desa:null, kelurahan:null },
+      { nama:'Tabang', penduduk:null, laki:null, perempuan:null, luas:null, desa:null, kelurahan:null }
+    ]
+  },
+
   /* ---------- Rekomendasi kebijakan (Booklet TW II) ---------- */
   rekomendasi: [
     { judul:'Perlindungan Sosial & Pengentasan Kemiskinan Tepat Sasaran', poin:[

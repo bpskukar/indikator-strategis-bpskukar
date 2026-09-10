@@ -879,6 +879,14 @@ td.num { text-align: right; font-variant-numeric: tabular-nums; font-weight: 700
   .region__name { font-size: 10px; }
   .region__val { font-size: .9rem; }
   .acc__panel { padding-left: 20px; }
+  /* kendali segmen: boleh menyempit & membungkus supaya kartu tidak melebar di HP kecil */
+  .seg { max-width: 100%; flex-wrap: wrap; justify-content: center; }
+  .seg button { padding: 7px 12px; font-size: 12.5px; white-space: normal; }
+  #ipmKomponen .row { flex-wrap: wrap; gap: 4px 12px; }
+  .split, .split-even { grid-template-columns: minmax(0, 1fr); }
+  .nav__inner { gap: 10px; }
+  .nav__tools { margin-left: auto; }
+  .brand__title { font-size: 13.5px; }
 }
 
 

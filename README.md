@@ -23,8 +23,9 @@ dan gerbang layanan **Katalog Data & PST** (https://bpskukar.github.io/katalog-d
 | **Kartu angka siap bagikan** | Tombol *Bagikan kartu* di tiap indikator: PNG 1080×1080 berlogo PINTAR dengan deret & sumber (`assets/kartu.js`, Web Share di HP). |
 | **Dari angka ke layanan** | Setiap kartu indikator punya tautan *Minta data lengkap* (membuka Katalog Data PST dengan pencarian terisi), *Tanya PST* (membuka asisten PST di halaman ini juga, pertanyaannya langsung terjawab), *Apa ini?* (glosarium), dan *Bagikan kartu*. |
 | **Asisten PST di halaman ini** | Tombol *Tanya PST* di pojok kanan bawah. Mesinnya dimuat dari repositori katalog lewat `assets/asisten.js` (satu domain), sehingga jawabannya sama persis dengan di katalog. |
+| **Data kecamatan** | Bagian `kecamatan` di `assets/data.js` (20 kecamatan: penduduk, laki-laki, perempuan, luas, desa, kelurahan) dipakai asisten untuk *“penduduk Tenggarong berapa?”*; diisi pegawai di Ruang Pegawai → Indikator → Kecamatan dari Kukar Dalam Angka. |
 | **Isi dikelola pegawai** | Semua angka, grafik, narasi, dan teks dibaca dari tabel `indikator_konten` di Supabase dan disunting dari Ruang Pegawai situs katalog (tab **Indikator**), dengan riwayat versi. |
-| **Bilah PINTAR & mode gelap** | Bilah atas bersama tiga situs dengan menu silang dan tombol tema terang/gelap yang sinkron (satu domain, satu simpanan `kukar-theme`). |
+| **Bilah PINTAR & mode gelap** | Bilah atas bersama tiga situs dengan menu tiga pintu (Beranda · Indikator Strategis · Katalog Data & Layanan PST) dan tombol tema terang/gelap yang sinkron (satu domain, satu simpanan `kukar-theme`). |
 | **Animasi & responsif** | Count-up, muncul saat digulir (nonaktif bila *reduced motion*), tata letak desktop–ponsel. |
 
 ## Struktur berkas
