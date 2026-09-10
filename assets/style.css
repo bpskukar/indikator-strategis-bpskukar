@@ -165,12 +165,7 @@ a { color: inherit; }
 }
 .nav__links a:hover { background: var(--brand-soft); color: var(--brand-strong); }
 .nav__links a.is-active { background: var(--brand); color: #fff; }
-.nav__links a.luar {
-  display: inline-flex; align-items: center; gap: 5px;
-  margin-left: 6px; border: 1px solid var(--border-strong); color: var(--text);
-}
-.nav__links a.luar:hover { border-color: var(--brand); }
-.drawer a.luar { border-top: 1px solid var(--border); margin-top: 6px; padding-top: 14px; }
+
 
 .nav__tools { display: flex; align-items: center; gap: 8px; margin-left: 10px; }
 
