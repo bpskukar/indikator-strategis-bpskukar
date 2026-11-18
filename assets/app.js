@@ -43,7 +43,8 @@
   let INFO = { sumber: 'awal' };
 
   const state = {
-    periode: 'tw2',
+    periode: 'tw2',          // diganti periode terakhir di D.periode saat digambar (lihat renderPeriodeTombol)
+    periodeDipilih: false,   // true setelah pengunjung menekan tombol periode sendiri
     kategori: 'semua',
     query: '',
     pdrbMode: 'triwulan',
@@ -190,9 +191,11 @@
     const cards = $$('#kpiGrid .kpi');
     let visible = 0;
 
+    /* "hanya"/data-only = kartu baru ada sejak periode itu: tampil pada periode tersebut dan sesudahnya */
+    const urutan = Object.keys(D.periode || {});
     cards.forEach((card) => {
       const only  = card.dataset.only;
-      const okPer = !only || only === state.periode;
+      const okPer = !only || urutan.indexOf(only) <= urutan.indexOf(state.periode);
       const okKat = state.kategori === 'semua' || card.dataset.kat === state.kategori;
       const okQ   = !state.query || card.dataset.text.includes(state.query);
       const show  = okPer && okKat && okQ;
@@ -744,6 +747,9 @@
 
   function renderPeriodeTombol() {
     const per = D.periode || {};
+    const kunci = Object.keys(per);
+    /* periode terbaru yang terpilih saat dibuka; pilihan pengunjung dipertahankan selama masih ada */
+    if (kunci.length && (!state.periodeDipilih || !per[state.periode])) state.periode = kunci[kunci.length - 1];
     $$('[data-seg="periode"]').forEach((seg) => {
       const pendek = seg.closest('.hero__panel');
       seg.innerHTML = Object.keys(per).map((k) =>
@@ -775,6 +781,7 @@
     const ket = {
       server: `Isi versi ${INFO.versi || '-'}${INFO.diubah_pada ? ', diperbarui ' + tgl(INFO.diubah_pada) : ''} — dikelola lewat Ruang Pegawai PST.`,
       cache:  `Server tidak terjangkau; menampilkan salinan terakhir (versi ${INFO.versi || '-'}).`,
+      berkas: `Isi versi berkas ${tgl(INFO.diubah_pada)} (assets/data.js — lebih baru daripada isi server${INFO.server && INFO.server.versi ? ' versi ' + INFO.server.versi : ''}); dikelola lewat GitHub dan Ruang Pegawai PST.`,
       draf:   'PRATINJAU DRAF — belum diterbitkan.',
       demo:   `Mode demo: isi dari simpanan peramban (versi ${INFO.versi || '-'}).`,
       awal:   'Isi dari berkas awal (assets/data.js).'
@@ -783,6 +790,18 @@
     el.textContent = (ket[INFO.sumber] || '') + (meta.sinkron_terakhir ? ` Angka ditarik otomatis dari Web API BPS, terakhir ${tgl(meta.sinkron_terakhir)}.` : '');
     const spanduk = $('#spandukPratinjau');
     if (spanduk) spanduk.hidden = INFO.sumber !== 'draf';
+
+    /* lencana "Diperbarui …" di panel hero: tanggal terbit isi dari Ruang Pegawai */
+    const pill = $('#heroVersi');
+    if (pill) {
+      const tglPanjang = (iso) => {
+        const d = new Date(iso);
+        return isNaN(d) ? '' : d.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+      };
+      const tayang = ['server', 'cache', 'demo', 'berkas'].includes(INFO.sumber) && INFO.diubah_pada ? tglPanjang(INFO.diubah_pada) : '';
+      pill.hidden = !tayang;
+      pill.textContent = tayang ? `Diperbarui ${tayang}` : '';
+    }
   }
 
   /* ---------------- Navigasi ---------------- */
@@ -828,6 +847,7 @@
       seg.addEventListener('click', (e) => {
         const btn = e.target.closest('button'); if (!btn) return;
         state.periode = btn.dataset.value;
+        state.periodeDipilih = true;
         $$('[data-seg="periode"] button').forEach((b) =>
           b.classList.toggle('is-active', b.dataset.value === state.periode));
         applyPeriode();

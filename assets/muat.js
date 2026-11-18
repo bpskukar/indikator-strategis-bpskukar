@@ -10,6 +10,11 @@
         sedang tidak terjangkau.
      4. Mode demo (config.js kosong): simpanan admin demo 'pstkukar.indikator'.
      5. assets/data.js — isi awal/cadangan.
+   Yang terbaru menang: bila assets/data.js membawa meta.terbit yang lebih baru
+   daripada tanggal terbit isi server, berkas itulah yang ditampilkan (sumber
+   "berkas") — jadi pemutakhiran lewat GitHub langsung tayang tanpa menunggu
+   diterbitkan ulang dari Ruang Pegawai. Terbitan berikutnya dari Ruang Pegawai
+   (tanggalnya lebih baru) kembali menang.
    Tidak memakai pustaka: cukup fetch ke REST Supabase dengan kunci publik.
    ========================================================================== */
 window.INDIKATOR = (function () {
@@ -23,6 +28,13 @@ window.INDIKATOR = (function () {
   function awal() { return window.INDIKATOR_AWAL || null; }
   function sahih(d) { return d && typeof d === "object" && Array.isArray(d.indikator) && d.periode && d.teks; }
   function terhubung() { return !!(K.SUPABASE_URL && K.SUPABASE_ANON_KEY); }
+  /* true bila data.js (meta.terbit) lebih baru daripada tanggal isi yang dibandingkan */
+  function berkasLebihBaru(diubahPada) {
+    var a = awal(), t = a && a.meta && a.meta.terbit; if (!t || !sahih(a)) return false;
+    var tb = new Date(t), ts = new Date(diubahPada || 0);
+    return !isNaN(tb) && (isNaN(ts) || tb > ts);
+  }
+  function dariBerkas(r) { return { data: awal(), sumber: "berkas", versi: r && r.versi, diubah_pada: awal().meta.terbit, server: r || null }; }
 
   function dariServer() {
     var ctrl = typeof AbortController !== "undefined" ? new AbortController() : null;
@@ -52,17 +64,17 @@ window.INDIKATOR = (function () {
     }
     if (!terhubung()) {
       var demo = baca(KUNCI_DEMO);
-      if (demo && sahih(demo.data)) return Promise.resolve({ data: demo.data, sumber: "demo", versi: demo.versi, diubah_pada: demo.diubah_pada });
+      if (demo && sahih(demo.data)) return Promise.resolve(berkasLebihBaru(demo.diubah_pada) ? dariBerkas(demo) : { data: demo.data, sumber: "demo", versi: demo.versi, diubah_pada: demo.diubah_pada });
       return Promise.resolve({ data: awal(), sumber: "awal" });
     }
     return dariServer().then(function (r) {
-      if (r) return r;                                   // dari server
+      if (r) return berkasLebihBaru(r.diubah_pada) ? dariBerkas(r) : r;   // dari server, kecuali berkas lebih baru
       var cache = baca(KUNCI_CACHE);
       if (r === undefined && cache && sahih(cache.data)) // server gagal → salinan terakhir
-        return { data: cache.data, sumber: "cache", versi: cache.versi, diubah_pada: cache.diubah_pada };
+        return berkasLebihBaru(cache.diubah_pada) ? dariBerkas(cache) : { data: cache.data, sumber: "cache", versi: cache.versi, diubah_pada: cache.diubah_pada };
       return { data: awal(), sumber: "awal" };
     });
   }
 
-  return { muat: muat, awal: awal, terhubung: terhubung, sahih: sahih, KUNCI_DRAF: KUNCI_DRAF, KUNCI_DEMO: KUNCI_DEMO };
+  return { muat: muat, awal: awal, terhubung: terhubung, sahih: sahih, berkasLebihBaru: berkasLebihBaru, KUNCI_DRAF: KUNCI_DRAF, KUNCI_DEMO: KUNCI_DEMO };
 })();
